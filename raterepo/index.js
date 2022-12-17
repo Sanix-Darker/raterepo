@@ -43,28 +43,27 @@ export async function rateRepo(repoOwner, repoName) {
     return rating.toFixed(4);
 }
 
-async function countCommits(owner, repo) {
-    const response = await fetch(`${API_URL}/repos/${owner}/${repo}/commits`);
+
+async function countStats(owner, repo, stat) {
+    const response = await fetch(`${API_URL}/repos/${owner}/${repo}/${stat}`);
     const data = await response.json();
     return data.length;
+}
+
+async function countCommits(owner, repo) {
+    return await countStats(owner, repo, 'commits');
 }
 
 async function countContributors(owner, repo) {
-    const response = await fetch(`${API_URL}/repos/${owner}/${repo}/contributors`);
-    const data = await response.json();
-    return data.length;
+    return await countStats(owner, repo, 'contributors');
 }
 
 async function countReleases(owner, repo) {
-    const response = await fetch(`${API_URL}/repos/${owner}/${repo}/releases`);
-    const data = await response.json();
-    return data.length;
+    return await countStats(owner, repo, 'releases');
 }
 
 async function countBranches(owner, repo) {
-    const response = await fetch(`${API_URL}/repos/${owner}/${repo}/branches`);
-    const data = await response.json();
-    return data.length;
+    return await countStats(owner, repo, 'branches');
 }
 
 export async function countDiscussions(repoOwner, repoName) {
