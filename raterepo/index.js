@@ -1,14 +1,25 @@
 // github api url
 const API_URL = 'https://api.github.com';
 
+async function fetchWithCache(url){
+    const data = getLocalStorageWithExpiration(url);
+
+    if (rating === null) {
+        const response = await fetch(url);
+        const data = await response.json();
+        setLocalStorageWithExpiration(url, { 'data': data }, 3600);
+
+        return data
+    }
+
+    return data.data
+}
+
 export async function getRepoData(repoOwner, repoName) {
     const repoUrl = `${API_URL}/repos/${repoOwner}/${repoName}`;
 
     try {
-        const response = await fetch(repoUrl);
-        const repoData = await response.json();
-
-        return repoData;
+        return await fetchWithCache(repoUrl);
     } catch (error) {
         console.error(error);
     }
@@ -43,17 +54,14 @@ export async function rateRepo(repoOwner, repoName) {
     return rating.toFixed(4);
 }
 
-
 async function countStats(owner, repo, stat) {
-    const response = await fetch(`${API_URL}/repos/${owner}/${repo}/${stat}`);
-    const data = await response.json();
+    const data = await fetchWithCache(`${API_URL}/repos/${owner}/${repo}/${stat}`)
     return data.length;
 }
 
 async function getHashtags(owner, repo) {
   try {
-    const response = await fetch(`${API_URL}/repos/${owner}/${repo}`);
-    const data = await response.json();
+    const data = await fetchWithCache(`${API_URL}/repos/${owner}/${repo}`)
     return data.topics;
   } catch (error) {
     console.error(error);
@@ -62,8 +70,7 @@ async function getHashtags(owner, repo) {
 
 async function getDescription(owner, repo) {
   try {
-    const response = await fetch(`${API_URL}/repos/${owner}/${repo}`);
-    const data = await response.json();
+    const data = await fetchWithCache(`${API_URL}/repos/${owner}/${repo}`)
     return data.description;
   } catch (error) {
     console.error(error);
@@ -89,8 +96,7 @@ async function searchAlternateRepositories(owner, repo) {
     if (hashtags && hashtags.length > 0) {
       searchQuery += `+topic:${hashtags.join('+topic:')}`;
     }
-    const response = await fetch(`${API_URL}/search/repositories?q=${searchQuery}`);
-    const data = await response.json();
+    const data = await fetchWithCache(`${API_URL}/search/repositories?q=${searchQuery}`)
     return data.items;
   } catch (error) {
     console.error(error);
@@ -120,8 +126,7 @@ export async function countDiscussions(repoOwner, repoName) {
     const MAX_LOOP = 10;
 
     for (let index = 0; index < MAX_LOOP; index++) {
-        const response = await fetch(`${discussionsUrl}&page=${page}`);
-        const pageDiscussions = await response.json();
+        const pageDiscussions = await fetchWithCache(`${discussionsUrl}&page=${page}`);
 
         if (pageDiscussions.length === 0) {
             break;
