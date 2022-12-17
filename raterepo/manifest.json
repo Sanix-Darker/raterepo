@@ -6,21 +6,20 @@
       "activeTab"
   ],
   "icons": {
-    "16": "img/icon-16.png",
-    "48": "img/icon-48.png"
+    "48": "icon-48.png"
   },
   "background": {
-    "scripts": ["index.js"],
+    "scripts": ["lib/index.js"],
     "persistent": false
   },
   "author": "github.com/sanix-darker",
   "browser_action": {
-      "default_icon": "img/icon-48.png",
+      "default_icon": "icon-48.png",
       "default_title": "RateRepo"
   },
   "manifest_version": 2,
   "content_scripts": [ {
-    "js": [ "index.js" ],
+    "js": [ "lib/index.js" ],
     "matches": [ "http://github.com/*", "https://github.com/*"]
   }]
 }

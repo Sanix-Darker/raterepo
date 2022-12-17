@@ -4,7 +4,8 @@
   "description": "get a rate for a given repository",
   "main": "./raterepo/index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "build": "babel raterepo -d lib"
   },
   "type": "module",
   "repository": {
@@ -22,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/sanix-darker/raterepo/issues"
   },
-  "homepage": "https://github.com/sanix-darker/raterepo#readme"
+  "homepage": "https://github.com/sanix-darker/raterepo#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
 }
