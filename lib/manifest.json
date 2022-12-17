@@ -9,7 +9,7 @@
     "48": "icon-48.png"
   },
   "background": {
-    "scripts": ["lib/index.js"],
+    "scripts": ["index.js"],
     "persistent": false
   },
   "author": "github.com/sanix-darker",
@@ -19,7 +19,7 @@
   },
   "manifest_version": 2,
   "content_scripts": [ {
-    "js": [ "lib/index.js" ],
+    "js": [ "index.js" ],
     "matches": [ "http://github.com/*", "https://github.com/*"]
   }]
 }
