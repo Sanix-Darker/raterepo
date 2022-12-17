@@ -50,6 +50,53 @@ async function countStats(owner, repo, stat) {
     return data.length;
 }
 
+async function getHashtags(owner, repo) {
+  try {
+    const response = await fetch(`${API_URL}/repos/${owner}/${repo}`);
+    const data = await response.json();
+    return data.topics;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function getDescription(owner, repo) {
+  try {
+    const response = await fetch(`${API_URL}/repos/${owner}/${repo}`);
+    const data = await response.json();
+    return data.description;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function extractUniqueKeywords(text){
+    const commonWords = ['i','a','about','an','and','are','as','at','be','by','com','de','en','for','from','how','in','is','it','la','of','on','or','that','the','this','to','was','what','when','where','who','will','with','und','the','www'];
+    text = text.toLowerCase();
+    text = text.replace(/[^\w\d ]/g, '');
+    let result = text.split(' ');
+    result = result.filter(function (word) {
+        return commonWords.indexOf(word) === -1;
+    });
+    return result.unique();
+}
+
+async function searchAlternateRepositories(owner, repo) {
+  const query= extractUniqueKeywords(getDescription(owner, repo));
+  const hashtags = getHashtags(owner, repo);
+  try {
+    let searchQuery = `${query}`;
+    if (hashtags && hashtags.length > 0) {
+      searchQuery += `+topic:${hashtags.join('+topic:')}`;
+    }
+    const response = await fetch(`${API_URL}/search/repositories?q=${searchQuery}`);
+    const data = await response.json();
+    return data.items;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function countCommits(owner, repo) {
     return await countStats(owner, repo, 'commits');
 }
