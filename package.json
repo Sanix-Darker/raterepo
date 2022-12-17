@@ -1,0 +1,26 @@
+{
+  "name": "raterepo",
+  "version": "1.0.0",
+  "description": "get a rate for a given repository",
+  "main": "./raterepo/index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanix-darker/raterepo.git"
+  },
+  "keywords": [
+    "rate",
+    "repo",
+    "github",
+    "open-source"
+  ],
+  "author": "sanix-darker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sanix-darker/raterepo/issues"
+  },
+  "homepage": "https://github.com/sanix-darker/raterepo#readme"
+}
