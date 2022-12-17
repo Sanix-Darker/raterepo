@@ -1,5 +1,8 @@
+// github api url
+const API_URL = 'https://api.github.com';
+
 export async function getRepoData(repoOwner, repoName) {
-  const repoUrl = `https://api.github.com/repos/${repoOwner}/${repoName}`;
+  const repoUrl = `${API_URL}/repos/${repoOwner}/${repoName}`;
 
   try {
     const response = await fetch(repoUrl);
@@ -32,7 +35,7 @@ export async function rateRepo(repoOwner, repoName) {
 }
 
 export async function getResolvedDiscussions(repoOwner, repoName) {
-  const discussionsUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?state=closed`;
+  const discussionsUrl = `${API_URL}/repos/${repoOwner}/${repoName}/issues?state=closed`;
   let discussions = [];
   let page = 1;
 
