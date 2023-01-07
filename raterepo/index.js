@@ -78,7 +78,13 @@ async function getDescription(owner, repo) {
 }
 
 function extractUniqueKeywords(text){
-    const commonWords = ['i','a','about','an','and','are','as','at','be','by','com','de','en','for','from','how','in','is','it','la','of','on','or','that','the','this','to','was','what','when','where','who','will','with','und','the','www'];
+    const commonWords = [
+        'i','a','about','an','and','are','as','at','be',
+        'by','com','de','en','for','from','how','in','is',
+        'it','la','of','on','or','that','the','this','to',
+        'was','what','when','where','who','will','with','und',
+        'the','www'
+    ];
     text = text.toLowerCase();
     text = text.replace(/[^\w\d ]/g, '');
     let result = text.split(' ');
